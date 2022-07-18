@@ -2,8 +2,9 @@ package register;
 
 import java.util.List;
 
-public class ListRegister implements Register{
-    private List <Person> list;
+public class ListRegister implements Register {
+    private List<Person> list;
+
     @Override
     public void addPerson(Person person) {
         list.add(person);

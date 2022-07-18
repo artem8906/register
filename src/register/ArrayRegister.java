@@ -60,7 +60,7 @@ public class ArrayRegister implements Register {
     public void addPerson(Person person) {
         try {
             for (Person p : persons) {
-                if (p==null) continue;
+                if (p == null) continue;
                 if (p.getName().equals(person.getName()) || p.getPhoneNumber().equals(person.getPhoneNumber()))
                     throw new IllegalArgumentException("Person with the same name or phone already exists");
             }
@@ -84,7 +84,7 @@ public class ArrayRegister implements Register {
         Person person = null;
 
         for (Person p : persons) {
-            if (p==null) continue;
+            if (p == null) continue;
             if (p.getName().equals(name)) {
                 person = p;
                 break;
@@ -111,7 +111,7 @@ public class ArrayRegister implements Register {
     public Person findPersonByPhoneNumber(String phoneNumber) {
         Person person = null;
         for (Person p : persons) {
-            if (p==null) continue;
+            if (p == null) continue;
             if (p.getPhoneNumber().equals(phoneNumber)) {
                 person = p;
                 break;
@@ -135,7 +135,7 @@ public class ArrayRegister implements Register {
      */
     public void removePerson(Person person) {
         for (int i = 0; i < persons.length; i++) {
-            if (persons[i]==null) continue;
+            if (persons[i] == null) continue;
             if (persons[i].equals(person))
                 persons[i] = null;
         }
@@ -149,11 +149,11 @@ public class ArrayRegister implements Register {
         ui.run();
     }
 
-    public void sortNullToEnd () {
-        for (int i = 0; i < persons.length-1; i++) {
-            if (persons[i]==null) {
-                persons[i] = persons[i+1];
-                persons[i+1] = null;
+    public void sortNullToEnd() {
+        for (int i = 0; i < persons.length - 1; i++) {
+            if (persons[i] == null) {
+                persons[i] = persons[i + 1];
+                persons[i + 1] = null;
             }
         }
     }
