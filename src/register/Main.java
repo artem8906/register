@@ -6,11 +6,12 @@ package register;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Register register = new Register(20);
 
-        register.addPerson(new Person("Janko Hrasko", "0900123456"));
+        ArrayRegister arrayRegister = new ArrayRegister(20);
 
-        ConsoleUI ui = new ConsoleUI(register);
+        arrayRegister.addPerson(new Person("Janko Hrasko", "0900123456"));
+
+        ConsoleUI ui = new ConsoleUI(arrayRegister);
         ui.run();
     }
 }
