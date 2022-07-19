@@ -8,8 +8,7 @@ import java.util.regex.Pattern;
  * register.Person.
  */
 public class Person implements Comparable<Person> {
-    public static final String regexForPhone = "\\d{7,12}";
-    public static final Pattern patternForPhone = Pattern.compile(regexForPhone);
+    public static final Pattern PATTERN_FOR_PHONE = Pattern.compile("\\d{7,12}");
     /**
      * Name of this person.
      */
@@ -26,7 +25,7 @@ public class Person implements Comparable<Person> {
      * @param name        name of the person
      * @param phoneNumber phone number of the person
      */
-    public Person(String name, String phoneNumber) {
+    public Person(String name, String phoneNumber) throws InvalidPhoneNumberException {
         this.name = name;
         this.setPhoneNumber(phoneNumber);
     }
@@ -63,10 +62,9 @@ public class Person implements Comparable<Person> {
      *
      * @param phoneNumberNew phone number of this person
      */
-    public void setPhoneNumber(String phoneNumberNew) {
+    public void setPhoneNumber(String phoneNumberNew) throws InvalidPhoneNumberException {
         if (!isValidPhoneNumber(phoneNumberNew)) {
-            throw new RuntimeException("Phone number is not valid");
-
+            throw new InvalidPhoneNumberException("Phone number is not valid");
         }
         phoneNumber = phoneNumberNew;
     }
@@ -80,8 +78,7 @@ public class Person implements Comparable<Person> {
      * @return <code>true</code> if phone number is valid, <code>false</code> otherwise
      */
     private boolean isValidPhoneNumber(String phoneNumber) {
-        Pattern p = Pattern.compile(regexForPhone);
-        Matcher m = p.matcher(phoneNumber);
+        Matcher m = PATTERN_FOR_PHONE.matcher(phoneNumber);
         return m.matches();
 
     }
@@ -110,6 +107,7 @@ public class Person implements Comparable<Person> {
 
     @Override
     public int compareTo(Person o) {
+        if(o == null) return -1;
         return name.compareTo(o.name);
     }
 

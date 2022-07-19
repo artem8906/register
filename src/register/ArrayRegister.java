@@ -1,5 +1,8 @@
 package register;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 /**
  * register.Person register.
  */
@@ -145,17 +148,23 @@ public class ArrayRegister implements Register {
 
     public void handler(Throwable e) {
         System.out.println(e.getMessage());
-        ConsoleUI ui = new ConsoleUI(this);
-        ui.run();
+//        ConsoleUI ui = new ConsoleUI(this);
+//        ui.run();
     }
 
     public void sortNullToEnd() {
-        for (int i = 0; i < persons.length - 1; i++) {
-            if (persons[i] == null) {
-                persons[i] = persons[i + 1];
-                persons[i + 1] = null;
+        Arrays.sort(persons, (Person p1, Person p2) -> {
+                if(p1 == null) return 1;
+                if(p2 == null) return -1;
+                return p1.getName().compareTo(p2.getName());
             }
-        }
+        );
+//        for (int i = 0; i < persons.length - 1; i++) {
+//            if (persons[i] == null) {
+//                persons[i] = persons[i + 1];
+//                persons[i + 1] = null;
+//            }
+//        }
     }
 }
 
