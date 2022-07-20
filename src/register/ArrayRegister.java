@@ -138,8 +138,6 @@ public class ArrayRegister implements Register {
 
     public void handler(Throwable e) {
         System.out.println(e.getMessage());
-        ConsoleUI ui = new ConsoleUI(this);
-        ui.run();
     }
 
     public void sortNullToEnd() {

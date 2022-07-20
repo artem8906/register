@@ -63,8 +63,6 @@ public class ListRegister implements Register {
     @Override
     public void handler(Throwable e) {
         System.out.println(e.getMessage());
-        ConsoleUI ui = new ConsoleUI(this);
-        ui.run();
     }
 
     public void print() {

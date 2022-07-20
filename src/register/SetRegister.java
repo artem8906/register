@@ -28,6 +28,12 @@ public class SetRegister implements Register{
 
     @Override
     public Person getPerson(int index) {
+        int count = 0;
+        for (Person p : set) {
+            if (index == 0)
+                return p;
+            else count++;
+        }
         return null;
     }
 

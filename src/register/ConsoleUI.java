@@ -34,7 +34,7 @@ public class ConsoleUI {
         this.register = register;
     }
 
-    public void run() {
+    public void run() throws PersonNotFoundException {
         try {
             while (true) {
                 switch (showMenu()) {
@@ -61,6 +61,7 @@ public class ConsoleUI {
         }
                 catch (PersonNotFoundException e) {
                     register.handler(e);
+                    findInRegister();
                 }
             }
 
