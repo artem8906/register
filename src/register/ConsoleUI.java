@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 
-import static register.Person.patternForPhone;
+import static register.Person.PATTERN_FOR_PHONE;
 
 /**
  * User interface of the application.
@@ -36,24 +36,28 @@ public class ConsoleUI {
 
     public void run() {
         while (true) {
-            switch (showMenu()) {
-                case PRINT:
-                    printRegister();
-                    break;
-                case ADD:
-                    addToRegister();
-                    break;
-                case UPDATE:
-                    updateRegister();
-                    break;
-                case REMOVE:
-                    removeFromRegister();
-                    break;
-                case FIND:
-                    findInRegister();
-                    break;
-                case EXIT:
-                    return;
+            try {
+                switch (showMenu()) {
+                    case PRINT:
+                        printRegister();
+                        break;
+                    case ADD:
+                        addToRegister();
+                        break;
+                    case UPDATE:
+                        updateRegister();
+                        break;
+                    case REMOVE:
+                        removeFromRegister();
+                        break;
+                    case FIND:
+                        findInRegister();
+                        break;
+                    case EXIT:
+                        return;
+                }
+            } catch (PersonNotFoundException e) {
+                arrayRegister.handler(e);
             }
         }
     }
@@ -87,8 +91,11 @@ public class ConsoleUI {
 
     //TODO: Implement the method printRegister
     private void printRegister() {
-        for (int i = 0; i < arrayRegister.getSize(); i++)
-            System.out.println(i + 1 + " " + arrayRegister.getPerson(i));
+        for (int i = 0; i < arrayRegister.getSize(); i++) {
+            Person p = arrayRegister.getPerson(i);
+            if (p == null) break;
+            System.out.println(i + 1 + " " + p);
+        }
 
     }
 
@@ -98,11 +105,16 @@ public class ConsoleUI {
         System.out.println("Enter Phone Number: ");
         String phoneNumber = readLine();
 
-        arrayRegister.addPerson(new Person(name, phoneNumber));
+        try {
+            arrayRegister.addPerson(new Person(name, phoneNumber));
+        } catch (InvalidPhoneNumberException e) {
+            System.err.println("Invalid phone number, try again!");
+            addToRegister();
+        }
     }
 
     //TODO: Implement the method updateRegister
-    private void updateRegister() {
+    private void updateRegister() throws PersonNotFoundException {
         System.out.println("Enter Name: ");
         String name = readLine();
         System.out.println("Enter Phone Number: ");
@@ -117,34 +129,28 @@ public class ConsoleUI {
         Person p2 = arrayRegister.findPersonByPhoneNumber(phoneNumber);
 
         if (p1 == p2) {
-            p1.setName(nameNew);
-            p1.setName(phoneNumberNew);
-        } else {
-            try {
-                throw new PersonNotFoundException("Person with this name and phone number did not found");
-            } catch (PersonNotFoundException e) {
-                arrayRegister.handler(e);
+            if(p1 != null) {
+                p1.setName(nameNew);
+                p1.setName(phoneNumberNew);
             }
-
+        } else {
+            throw new PersonNotFoundException("Person with this name and phone number did not found");
         }
 
     }
 
     //TODO: Implement the method findInRegister
-    private void findInRegister() {
+    private void findInRegister() throws PersonNotFoundException {
         System.out.println("Write name or phone number of person");
         String s = readLine();
-        Matcher m = patternForPhone.matcher(s);
+        Matcher m = PATTERN_FOR_PHONE.matcher(s);
         Person person;
 
         if (m.matches()) person = arrayRegister.findPersonByPhoneNumber(s);
         else person = arrayRegister.findPersonByName(s);
 
-        if (person == null) try {
-            throw new PersonNotFoundException("Person with this name or phone number was not found");
-        } catch (PersonNotFoundException e) {
-            arrayRegister.handler(e);
-        }
+        if (person == null)
+        throw new PersonNotFoundException("Person with this name or phone number was not found");
 
         System.out.println(person);
 
