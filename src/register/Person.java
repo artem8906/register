@@ -92,7 +92,7 @@ public class Person implements Comparable<Person> {
      * @return string representation of the person.
      */
     public String toString() {
-        return name + " (" + phoneNumber + ")";
+        return phoneNumber + " (" + name + ")";
     }
 
     @Override
