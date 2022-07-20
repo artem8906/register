@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
- * Created by jaro on 3.2.2014.
+ * Created by Artem on 3.2.2014.
  */
 public class Main {
 
