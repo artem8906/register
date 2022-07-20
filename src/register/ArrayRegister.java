@@ -80,7 +80,7 @@ public class ArrayRegister implements Register {
      * @param name name of a person to search for
      * @return person with specified phone number
      */
-    public Person findPersonByName(String name) {
+    public Person findPersonByName(String name) throws PersonNotFoundException {
         Person person = null;
 
         for (Person p : persons) {
@@ -90,13 +90,9 @@ public class ArrayRegister implements Register {
                 break;
             }
         }
-        if (person == null) try {
+        if (person == null)
             throw new PersonNotFoundException("Person with this name was not found");
-        } catch (PersonNotFoundException e) {
-            handler(e);
-        }
         return person;
-
     }
 
     //TODO: Implement the method findPersonByPhoneNumber
@@ -108,7 +104,7 @@ public class ArrayRegister implements Register {
      * @param phoneNumber phone number of a person to search for
      * @return person with specified phone number
      */
-    public Person findPersonByPhoneNumber(String phoneNumber) {
+    public Person findPersonByPhoneNumber(String phoneNumber) throws PersonNotFoundException {
         Person person = null;
         for (Person p : persons) {
             if (p == null) continue;
@@ -117,11 +113,8 @@ public class ArrayRegister implements Register {
                 break;
             }
         }
-        if (person == null) try {
+        if (person == null)
             throw new PersonNotFoundException("Person with this phone was not found");
-        } catch (PersonNotFoundException e) {
-            handler(e);
-        }
         return person;
     }
 
@@ -145,8 +138,6 @@ public class ArrayRegister implements Register {
 
     public void handler(Throwable e) {
         System.out.println(e.getMessage());
-        ConsoleUI ui = new ConsoleUI(this);
-        ui.run();
     }
 
     public void sortNullToEnd() {
